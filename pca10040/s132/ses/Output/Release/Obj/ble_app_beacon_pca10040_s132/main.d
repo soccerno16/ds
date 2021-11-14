@@ -58,6 +58,10 @@ Output/Release/Obj/ble_app_beacon_pca10040_s132/main.o: \
  ../../../../../../components/boards/pca10040.h \
  ../../../../../../components/libraries/button/app_button.h \
  ../../../../../../components/libraries/util/app_error.h \
+ ../../../../../../integration/nrfx/legacy/nrf_drv_gpiote.h \
+ ../../../../../../modules/nrfx/drivers/include/nrfx_gpiote.h \
+ ../../../../../../modules/nrfx/hal/nrf_gpiote.h \
+ ../../../../../../modules/nrfx/hal/nrf_gpio.h \
  ../../../../../../components/softdevice/common/nrf_sdh.h \
  ../../../../../../components/libraries/experimental_section_vars/nrf_section_iter.h \
  ../../../../../../components/libraries/experimental_section_vars/nrf_section.h \
