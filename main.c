@@ -91,6 +91,7 @@ static ble_gap_adv_params_t m_adv_params;                                  /**< 
 static uint8_t              m_adv_handle = BLE_GAP_ADV_SET_HANDLE_NOT_SET; /**< Advertising handle used to identify an advertising set. */
 static uint8_t              m_enc_advdata[BLE_GAP_ADV_SET_DATA_SIZE_MAX];  /**< Buffer for storing an encoded advertising set. */
 APP_TIMER_DEF(m_single_shot_timer_id);
+static bool advertising = false;
 
 /**@brief Struct that contains pointers to the encoded advertising data. */
 static ble_gap_adv_data_t m_adv_data =
@@ -211,14 +212,20 @@ static void advertising_start(void)
 {
     ret_code_t err_code;
 
-    err_code = sd_ble_gap_tx_power_set(BLE_GAP_TX_POWER_ROLE_ADV, m_adv_handle, 4); //max 4
-    APP_ERROR_CHECK(err_code);
+    if(advertising == false)
+    {
+      advertising = true;
+      NRF_LOG_INFO("Beacon started.");
 
-    err_code = sd_ble_gap_adv_start(m_adv_handle, APP_BLE_CONN_CFG_TAG);
-    APP_ERROR_CHECK(err_code);
+      err_code = sd_ble_gap_tx_power_set(BLE_GAP_TX_POWER_ROLE_ADV, m_adv_handle, 4); //max 4
+      APP_ERROR_CHECK(err_code);
 
-    err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING);
-    APP_ERROR_CHECK(err_code);
+      err_code = sd_ble_gap_adv_start(m_adv_handle, APP_BLE_CONN_CFG_TAG);
+      APP_ERROR_CHECK(err_code);
+
+      err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING);
+      APP_ERROR_CHECK(err_code);
+    }
 
 }
 
@@ -233,6 +240,9 @@ static void advertising_stop(void)
 
     err_code = bsp_indication_set(BSP_INDICATE_IDLE);
     APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_INFO("Beacon stopped.");
+    advertising = false;
 }
 
 
@@ -265,7 +275,6 @@ static void ble_stack_init(void)
 static void single_shot_timer_handler(void * p_context)
 {
     // Stop execution.
-    NRF_LOG_INFO("Beacon stopped.");
     advertising_stop();
 }
 
@@ -316,10 +325,8 @@ void bsp_event_handler(bsp_event_t event)
     switch(event)
     {
         case BSP_EVENT_KEY_0:
-          break;
         case BSP_EVENT_KEY_1:
            // Start execution.
-          NRF_LOG_INFO("Beacon started.");
           advertising_start();
 
           static uint32_t timeout = 1000*60;
@@ -356,6 +363,7 @@ int main(void)
     ble_stack_init();
     advertising_init();
 
+    NRF_LOG_INFO("Enter main loop.");
     // Enter main loop.
     for (;; )
     {
