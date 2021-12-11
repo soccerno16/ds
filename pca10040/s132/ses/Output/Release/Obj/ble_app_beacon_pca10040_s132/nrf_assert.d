@@ -1,7 +1,7 @@
 Output/Release/Obj/ble_app_beacon_pca10040_s132/nrf_assert.o: \
- C:\nordic\nRF5_SDK_17.1.0_ddde560\components\libraries\util\nrf_assert.c \
- C:\nordic\nRF5_SDK_17.1.0_ddde560\components\libraries\util\nrf_assert.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 5.64/include/stdint.h \
+ C:\nordic\nRF5_SDK_17.0.2\components\libraries\util\nrf_assert.c \
+ C:\nordic\nRF5_SDK_17.0.2\components\libraries\util\nrf_assert.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 5.62/include/stdint.h \
  ../../../../../../modules/nrfx/mdk/nrf.h \
  ../../../../../../modules/nrfx/mdk/nrf52805.h \
  ../../../../../../components/toolchain/cmsis/include/core_cm4.h \
@@ -15,11 +15,11 @@ Output/Release/Obj/ble_app_beacon_pca10040_s132/nrf_assert.o: \
  ../../../../../../modules/nrfx/mdk/nrf52_to_nrf52810.h \
  ../../../../../../modules/nrfx/mdk/nrf52810_to_nrf52811.h \
  ../../../../../../modules/nrfx/mdk/compiler_abstraction.h \
- C:\nordic\nRF5_SDK_17.1.0_ddde560\components\libraries\util\app_error.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 5.64/include/stdio.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 5.64/include/__crossworks.h \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 5.64/include/stdbool.h \
- C:\nordic\nRF5_SDK_17.1.0_ddde560\components\libraries\util\sdk_errors.h \
+ C:\nordic\nRF5_SDK_17.0.2\components\libraries\util\app_error.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 5.62/include/stdio.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 5.62/include/__crossworks.h \
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 5.62/include/stdbool.h \
+ C:\nordic\nRF5_SDK_17.0.2\components\libraries\util\sdk_errors.h \
  ../../../../../../components/softdevice/s132/headers/nrf_error.h \
- C:\nordic\nRF5_SDK_17.1.0_ddde560\components\libraries\util\nordic_common.h \
- C:\nordic\nRF5_SDK_17.1.0_ddde560\components\libraries\util\app_error_weak.h
+ C:\nordic\nRF5_SDK_17.0.2\components\libraries\util\nordic_common.h \
+ C:\nordic\nRF5_SDK_17.0.2\components\libraries\util\app_error_weak.h

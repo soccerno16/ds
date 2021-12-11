@@ -66,7 +66,7 @@
 
 #define APP_BLE_CONN_CFG_TAG            1                                  /**< A tag identifying the SoftDevice BLE configuration. */
 
-#define NON_CONNECTABLE_ADV_INTERVAL    MSEC_TO_UNITS(150, UNIT_0_625_MS)  /**< The advertising interval for non-connectable advertisement (100 ms). This value can vary between 100ms to 10.24s). */
+#define NON_CONNECTABLE_ADV_INTERVAL    MSEC_TO_UNITS(125, UNIT_0_625_MS)  /**< The advertising interval for non-connectable advertisement (100 ms). This value can vary between 100ms to 10.24s). */
 
 #define APP_BEACON_INFO_LENGTH          0x17                               /**< Total length of information advertised by the Beacon. */
 #define APP_ADV_DATA_LENGTH             0x15                               /**< Length of manufacturer specific data in the advertisement. */
@@ -76,9 +76,9 @@
 #define APP_MAJOR_VALUE                 0x01, 0x02                         /**< Major value used to identify Beacons. */
 #define APP_MINOR_VALUE                 0x03, 0x04                         /**< Minor value used to identify Beacons. */
 #define APP_BEACON_UUID                 0xDE, 0xAD, 0xBE, 0xEF, \
-                                        0x45, 0x56, 0x67, 0x78, \
-                                        0x89, 0x9a, 0xab, 0xbc, \
-                                        0xcd, 0xde, 0xef, 0xf0            /**< Proprietary UUID for Beacon. */
+                                        0x00, 0x00, 0x00, 0x00, \
+                                        0x00, 0x00, 0x00, 0x00, \
+                                        0x00, 0x00, 0x00, 0x03            /**< Proprietary UUID for Beacon. */
 
 #define DEAD_BEEF                       0xDEADBEEF                         /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
 
@@ -216,6 +216,7 @@ static void advertising_start(void)
     {
       advertising = true;
       NRF_LOG_INFO("Beacon started.");
+      printf("Beacon started.\n");
 
       err_code = sd_ble_gap_tx_power_set(BLE_GAP_TX_POWER_ROLE_ADV, m_adv_handle, 4); //max 4
       APP_ERROR_CHECK(err_code);
@@ -242,6 +243,7 @@ static void advertising_stop(void)
     APP_ERROR_CHECK(err_code);
 
     NRF_LOG_INFO("Beacon stopped.");
+    printf("Beacon stopped.\n");
     advertising = false;
 }
 
@@ -321,20 +323,19 @@ static void log_init(void)
 
 void bsp_event_handler(bsp_event_t event)
 {
-    printf("Event");
     switch(event)
     {
         case BSP_EVENT_KEY_0:
         case BSP_EVENT_KEY_1:
+        case BSP_EVENT_KEY_2:
+        case BSP_EVENT_KEY_3:
            // Start execution.
           advertising_start();
 
-          static uint32_t timeout = 1000*60;
+          static uint32_t timeout = 1000*60*7;
           ret_code_t err_code = app_timer_start(m_single_shot_timer_id, APP_TIMER_TICKS(timeout),NULL);
           APP_ERROR_CHECK(err_code);
           break;
-        case BSP_EVENT_KEY_2:
-        case BSP_EVENT_KEY_3:
         default:
             break;
     }
