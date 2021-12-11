@@ -111,6 +111,7 @@
     </folder>
     <configuration
       Name="Release"
+      debug_leave_target_running="Yes"
       linker_section_placements_segments="FLASH1 RX 0x0 0x30000;RAM1 RWX 0x20000000 0x6000" />
   </project>
   <configuration

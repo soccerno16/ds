@@ -1,2 +1,2 @@
 Output/Release/Obj/ble_app_beacon_pca10040e_s112/thumb_crt0.o: \
- C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 5.64/source/thumb_crt0.s
+ C:/Program\ Files/SEGGER/SEGGER\ Embedded\ Studio\ for\ ARM\ 5.62/source/thumb_crt0.s
