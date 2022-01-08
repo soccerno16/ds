@@ -63,10 +63,12 @@
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
 
+#define ALWAYS_ON 1
+#define ACTIVE_PERIOD                   1000*60*15
 
 #define APP_BLE_CONN_CFG_TAG            1                                  /**< A tag identifying the SoftDevice BLE configuration. */
 
-#define NON_CONNECTABLE_ADV_INTERVAL    MSEC_TO_UNITS(125, UNIT_0_625_MS)  /**< The advertising interval for non-connectable advertisement (100 ms). This value can vary between 100ms to 10.24s). */
+#define NON_CONNECTABLE_ADV_INTERVAL    MSEC_TO_UNITS(100, UNIT_0_625_MS)  /**< The advertising interval for non-connectable advertisement (100 ms). This value can vary between 100ms to 10.24s). */
 
 #define APP_BEACON_INFO_LENGTH          0x17                               /**< Total length of information advertised by the Beacon. */
 #define APP_ADV_DATA_LENGTH             0x15                               /**< Length of manufacturer specific data in the advertisement. */
@@ -78,7 +80,7 @@
 #define APP_BEACON_UUID                 0xDE, 0xAD, 0xBE, 0xEF, \
                                         0x00, 0x00, 0x00, 0x00, \
                                         0x00, 0x00, 0x00, 0x00, \
-                                        0x00, 0x00, 0x00, 0x03            /**< Proprietary UUID for Beacon. */
+                                        0x00, 0x00, 0x00, 0x11            /**< Proprietary UUID for Beacon. */
 
 #define DEAD_BEEF                       0xDEADBEEF                         /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
 
@@ -196,7 +198,6 @@ static void advertising_init(void)
     m_adv_params.filter_policy   = BLE_GAP_ADV_FP_ANY;
     m_adv_params.interval        = NON_CONNECTABLE_ADV_INTERVAL;
     m_adv_params.duration        = 0;       // Never time out.
-
 
     err_code = ble_advdata_encode(&advdata, m_adv_data.adv_data.p_data, &m_adv_data.adv_data.len);
     APP_ERROR_CHECK(err_code);
@@ -330,11 +331,13 @@ void bsp_event_handler(bsp_event_t event)
         case BSP_EVENT_KEY_2:
         case BSP_EVENT_KEY_3:
            // Start execution.
+#ifndef ALWAYS_ON
           advertising_start();
 
-          static uint32_t timeout = 1000*60*7;
+          static uint32_t timeout = ACTIVE_PERIOD;
           ret_code_t err_code = app_timer_start(m_single_shot_timer_id, APP_TIMER_TICKS(timeout),NULL);
           APP_ERROR_CHECK(err_code);
+#endif
           break;
         default:
             break;
@@ -363,6 +366,10 @@ int main(void)
     power_management_init();
     ble_stack_init();
     advertising_init();
+
+#ifdef ALWAYS_ON
+    advertising_start();
+#endif
 
     NRF_LOG_INFO("Enter main loop.");
     // Enter main loop.
